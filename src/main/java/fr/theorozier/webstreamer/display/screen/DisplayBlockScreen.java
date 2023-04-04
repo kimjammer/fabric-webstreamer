@@ -141,14 +141,14 @@ public class DisplayBlockScreen extends Screen {
         this.audioVolumeSlider.setChangedListener(volume -> this.displayAudioVolume = volume);
         this.addDrawableChild(this.audioVolumeSlider);
         
-        this.doneButton = new ButtonWidget(xHalf - 4 - 150, height / 4 + 120 + 12, 150, 20, ScreenTexts.DONE, button -> {
+        this.doneButton = ButtonWidget.builder(ScreenTexts.DONE, button -> {
             this.commitAndClose();
-        });
+        }).dimensions(xHalf - 4 - 150, height / 4 + 120 + 12, 150, 20).build();
         this.addDrawableChild(this.doneButton);
 
-        this.cancelButton = new ButtonWidget(xHalf + 4, height / 4 + 120 + 12, 150, 20, ScreenTexts.CANCEL, button -> {
+        this.cancelButton = ButtonWidget.builder(ScreenTexts.CANCEL, button -> {
             this.close();
-        });
+        }).dimensions(xHalf + 4, height / 4 + 120 + 12, 150, 20).build();
         this.addDrawableChild(this.cancelButton);
 
         if (this.sourceScreen != null) {
@@ -198,7 +198,7 @@ public class DisplayBlockScreen extends Screen {
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         this.renderBackground(matrices);
-        drawCenteredText(matrices, this.textRenderer, CONF_TEXT, xHalf, 20, 0xFFFFFF);
+        drawCenteredTextWithShadow(matrices, this.textRenderer, CONF_TEXT, xHalf, 20, 0xFFFFFF);
         drawTextWithShadow(matrices, this.textRenderer, WIDTH_TEXT, xHalf - 154, yTop + 1, 0xA0A0A0);
         drawTextWithShadow(matrices, this.textRenderer, HEIGHT_TEXT, xHalf - 96, yTop + 1, 0xA0A0A0);
         if (this.sourceScreen != null) {
@@ -298,7 +298,7 @@ public class DisplayBlockScreen extends Screen {
         public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
             drawTextWithShadow(matrices, textRenderer, URL_TEXT, xHalf - 154, ySourceTop, 0xA0A0A0);
             if (this.source.getUri() == null) {
-                drawCenteredText(matrices, textRenderer, MALFORMED_URL_TEXT, xHalf, ySourceTop + 50, 0xFF6052);
+                drawCenteredTextWithShadow(matrices, textRenderer, MALFORMED_URL_TEXT, xHalf, ySourceTop + 50, 0xFF6052);
             }
         }
 
@@ -370,7 +370,7 @@ public class DisplayBlockScreen extends Screen {
             if (this.playlistError == null) {
                 drawTextWithShadow(matrices, textRenderer, QUALITY_TEXT, xHalf - 154, ySourceTop + 40, 0xA0A0A0);
             } else {
-                drawCenteredText(matrices, textRenderer, this.playlistError, xHalf, ySourceTop + 50, 0xFF6052);
+                drawCenteredTextWithShadow(matrices, textRenderer, this.playlistError, xHalf, ySourceTop + 50, 0xFF6052);
             }
         }
 
@@ -538,7 +538,7 @@ public class DisplayBlockScreen extends Screen {
     
         @Override
         protected void updateMessage() {
-            Text text = (this.value == this.getYImage(false)) ? ScreenTexts.OFF : Text.literal((int)(this.value * 100.0) + "%");
+            Text text = (this.value == (this.active ? 1 : 0)) ? ScreenTexts.OFF : Text.literal((int)(this.value * 100.0) + "%");
             this.setMessage(Text.translatable(AUDIO_VOLUME_TEXT_KEY).append(": ").append(text));
         }
     

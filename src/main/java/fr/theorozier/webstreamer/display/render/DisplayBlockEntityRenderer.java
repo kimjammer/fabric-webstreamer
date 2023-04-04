@@ -21,9 +21,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.shape.VoxelShape;
+import org.joml.Matrix4f;
 
 import java.util.stream.StreamSupport;
 
@@ -155,21 +155,21 @@ public class DisplayBlockEntityRenderer implements BlockEntityRenderer<DisplayBl
             switch (entity.getCachedState().get(Properties.HORIZONTAL_FACING)) {
                 case NORTH -> matrices.translate(0.5f + halfWidth, 0.5f + halfHeight, 0.85f);
                 case SOUTH -> {
-                    matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
+                    matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
                     matrices.translate(-0.5f + halfWidth, 0.5f + halfHeight, -0.15f);
                 }
                 case EAST -> {
-                    matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270));
+                    matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(270));
                     matrices.translate(0.5f + halfWidth, 0.5f + halfHeight, -0.15f);
                 }
                 case WEST -> {
-                    matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
+                    matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
                     matrices.translate(-0.5f + halfWidth, 0.5f + halfHeight, 0.85f);
                 }
             }
     
             matrices.scale(-scale, -scale, 1f);
-            this.textRenderer.draw(statusText, 0f, 0f, 0x00ffffff, false, matrices.peek().getPositionMatrix(), vertexConsumers, false, 0xBB222222, light);
+            this.textRenderer.draw(statusText, 0f, 0f, 0x00ffffff, false, matrices.peek().getPositionMatrix(), vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0xBB222222, light);
             matrices.pop();
     
         }

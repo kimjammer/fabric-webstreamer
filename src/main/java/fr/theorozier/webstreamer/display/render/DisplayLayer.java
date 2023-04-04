@@ -78,10 +78,9 @@ public abstract class DisplayLayer {
 					256, false, true,
 					() -> {
 						layer.lastUse = System.nanoTime();
-						POSITION_TEXTURE_SHADER.startDrawing();
+						POSITION_TEXTURE_PROGRAM.startDrawing();
 						RenderSystem.enableDepthTest();
 						RenderSystem.depthFunc(GL11.GL_LEQUAL);
-						RenderSystem.enableTexture();
 						RenderSystem.setShaderTexture(0, layer.tex.getGlId());
 					},
 					RenderSystem::disableDepthTest);

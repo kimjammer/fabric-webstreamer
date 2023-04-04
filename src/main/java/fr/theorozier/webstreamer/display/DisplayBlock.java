@@ -56,7 +56,7 @@ public class DisplayBlock extends BlockWithEntity {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         Direction dir = ctx.getSide();
         if (dir == Direction.DOWN || dir == Direction.UP) {
-            dir = ctx.getPlayerFacing().getOpposite();
+            dir = ctx.getHorizontalPlayerFacing().getOpposite();
         }
         return this.getDefaultState().with(Properties.HORIZONTAL_FACING, dir);
     }
