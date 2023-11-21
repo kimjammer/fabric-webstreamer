@@ -12,6 +12,7 @@ import fr.theorozier.webstreamer.twitch.TwitchClient;
 import fr.theorozier.webstreamer.util.AsyncProcessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -196,15 +197,15 @@ public class DisplayBlockScreen extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        this.renderBackground(matrices);
-        drawCenteredTextWithShadow(matrices, this.textRenderer, CONF_TEXT, xHalf, 20, 0xFFFFFF);
-        drawTextWithShadow(matrices, this.textRenderer, WIDTH_TEXT, xHalf - 154, yTop + 1, 0xA0A0A0);
-        drawTextWithShadow(matrices, this.textRenderer, HEIGHT_TEXT, xHalf - 96, yTop + 1, 0xA0A0A0);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderBackground(context);
+        context.drawCenteredTextWithShadow(this.textRenderer, CONF_TEXT, xHalf, 20, 0xFFFFFF);
+        context.drawTextWithShadow(this.textRenderer, WIDTH_TEXT, xHalf - 154, yTop + 1, 0xA0A0A0);
+        context.drawTextWithShadow(this.textRenderer, HEIGHT_TEXT, xHalf - 96, yTop + 1, 0xA0A0A0);
         if (this.sourceScreen != null) {
-            this.sourceScreen.render(matrices, mouseX, mouseY, delta);
+            this.sourceScreen.render(context, mouseX, mouseY, delta);
         }
-        super.render(matrices, mouseX, mouseY, delta);
+        super.render(context, mouseX, mouseY, delta);
     }
 
     @Override
@@ -295,10 +296,10 @@ public class DisplayBlockScreen extends Screen {
         }
 
         @Override
-        public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-            drawTextWithShadow(matrices, textRenderer, URL_TEXT, xHalf - 154, ySourceTop, 0xA0A0A0);
+        public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+            context.drawTextWithShadow(textRenderer, URL_TEXT, xHalf - 154, ySourceTop, 0xA0A0A0);
             if (this.source.getUri() == null) {
-                drawCenteredTextWithShadow(matrices, textRenderer, MALFORMED_URL_TEXT, xHalf, ySourceTop + 50, 0xFF6052);
+                context.drawCenteredTextWithShadow(textRenderer, MALFORMED_URL_TEXT, xHalf, ySourceTop + 50, 0xFF6052);
             }
         }
 
@@ -365,12 +366,12 @@ public class DisplayBlockScreen extends Screen {
         }
 
         @Override
-        public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-            drawTextWithShadow(matrices, textRenderer, CHANNEL_TEXT, xHalf - 154, ySourceTop, 0xA0A0A0);
+        public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+            context.drawTextWithShadow(textRenderer, CHANNEL_TEXT, xHalf - 154, ySourceTop, 0xA0A0A0);
             if (this.playlistError == null) {
-                drawTextWithShadow(matrices, textRenderer, QUALITY_TEXT, xHalf - 154, ySourceTop + 40, 0xA0A0A0);
+                context.drawTextWithShadow(textRenderer, QUALITY_TEXT, xHalf - 154, ySourceTop + 40, 0xA0A0A0);
             } else {
-                drawCenteredTextWithShadow(matrices, textRenderer, this.playlistError, xHalf, ySourceTop + 50, 0xFF6052);
+                context.drawCenteredTextWithShadow(textRenderer, this.playlistError, xHalf, ySourceTop + 50, 0xFF6052);
             }
         }
 

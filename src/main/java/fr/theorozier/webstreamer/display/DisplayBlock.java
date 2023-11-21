@@ -27,7 +27,7 @@ public class DisplayBlock extends BlockWithEntity {
     private static final VoxelShape SHAPE_EAST = VoxelShapes.cuboid(0, 0, 0, 0.1, 1, 1);
     
     public DisplayBlock() {
-        super(Settings.of(Material.GLASS)
+        super(Settings.create()
                 .sounds(BlockSoundGroup.GLASS)
                 .strength(-1.0f, 3600000.0f)
                 .requiresTool()
